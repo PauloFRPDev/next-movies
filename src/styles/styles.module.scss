@@ -1,0 +1,119 @@
+.container {
+  height: 100vh;
+}
+
+.heroImage {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  position: relative;
+}
+
+.heroInformation {
+  max-width: 600px;
+  margin: 100px 0 0 200px;
+
+  h1 {
+    color: #fff;
+    font-size: 3rem;
+  }
+
+  > span {
+    color: #adafb3;
+  }
+
+  > button {
+    display: flex;
+
+    overflow: hidden;
+
+    margin: 1rem 0;
+    background: none;
+    border: 2px solid #59c8b5;
+    border-radius: 0.5rem;
+
+    span {
+      display: block;
+      align-self: center;
+      flex: 1;
+      padding: 0 12px 0 16px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    > div {
+      height: 100%;
+      background: #59c8b5;
+      padding: 0 12px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        width: 40px;
+        height: 40px;
+        color: #fff;
+      }
+    }
+  }
+
+  > p {
+    color: #adafb3;
+  }
+}
+
+.cardsRow {
+  position: absolute;
+  left: 0;
+  bottom: 2rem;
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 100%;
+  min-height: 250px;
+  padding: 0 2rem;
+  grid-gap: 2rem;
+  color: #fff;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  border-radius: 0.5rem;
+  border: 2px solid #fff;
+  overflow: hidden;
+  // box-shadow: 2px 2px 5px white;
+  cursor: pointer;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inherit;
+    font-stretch: condensed;
+
+    > p {
+      flex: 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    > span {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+  }
+}

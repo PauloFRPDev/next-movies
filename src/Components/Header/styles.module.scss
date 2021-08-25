@@ -1,0 +1,125 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 5rem;
+  padding: 0 2rem;
+  border-bottom: 2px solid #262c31;
+  background: transparent;
+
+  h2 {
+    color: #59c8b5;
+  }
+}
+
+.nav {
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+
+  ul {
+    display: flex;
+    flex-direction: center;
+    align-items: center;
+    gap: 1rem;
+
+    list-style: none;
+
+    li {
+      color: #fcfeff;
+      font-size: 1.2rem;
+      display: inline-block;
+      position: relative;
+      line-height: 5rem;
+      transition: 0.3s ease;
+
+      a {
+        text-decoration: none;
+      }
+
+      &.active {
+        color: #57c3ba;
+
+        &::after {
+          content: "";
+          position: absolute;
+          height: 2px;
+          background: #346f6d;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+        }
+      }
+
+      &:not(.active):hover {
+        color: #57c3ba;
+
+        &::after {
+          content: "";
+          position: absolute;
+          height: 2px;
+          background: #346f6d;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+
+          /* Animation on hover */
+          -webkit-animation-name: hover;
+          -webkit-animation-duration: 1.5s;
+          animation-name: hover;
+          animation-duration: 0.3s;
+
+          @-webkit-keyframes hover {
+            from {
+              width: 0;
+            }
+            to {
+              width: 100%;
+            }
+          }
+
+          @keyframes hover {
+            from {
+              width: 0;
+            }
+            to {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0.4rem;
+    background: #32383d;
+    border-radius: 50%;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    &:hover {
+      background: #32383d99;
+    }
+  }
+
+  svg {
+    width: 25px;
+    height: 25px;
+    color: #5eb5b1;
+  }
+}
