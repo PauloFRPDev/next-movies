@@ -1,4 +1,6 @@
 import type { GetStaticProps, NextPage } from "next";
+import { useState } from "react";
+import { useEffect } from "react";
 import { MdPlaylistAdd } from "react-icons/md";
 
 import Header from "../Components/Header";
@@ -12,11 +14,30 @@ interface HomeProps {
     backdrop_path: string;
     overview: string;
     vote_average: string;
+    genre_ids: GenreProps[] | number[];
+    genre_string?: string;
     id: string;
   }[];
 }
 
+interface GenreProps {
+  id: number;
+  name: string;
+}
+
 const Home = ({ movies }: HomeProps) => {
+  const GenreSpan = () => {
+    const genres = movies[0].genre_ids as GenreProps[];
+
+    return (
+      <span>
+        {genres.map((genre, index) => {
+          return index !== 0 ? ` | ${genre.name}` : `${genre.name}`;
+        })}
+      </span>
+    );
+  };
+
   return (
     <main className={styles.container}>
       <div
@@ -26,15 +47,16 @@ const Home = ({ movies }: HomeProps) => {
           backgroundPosition: "right",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
         }}
       >
         <Header />
 
         <div className={styles.heroInformation}>
           <h1>{movies[0].original_title}</h1>
-          <span>Crime | Drama | Mystery</span>
+          <GenreSpan />
           <button>
-            <span>Adicionar a lista</span>
+            <span>Add to list</span>
             <div>
               <MdPlaylistAdd />
             </div>
@@ -68,13 +90,35 @@ const Home = ({ movies }: HomeProps) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await api.get("/trending/movie/day");
+  const movieResponse = await api.get("/trending/movie/day");
+  const genreResponse = await api.get("/genre/movie/list");
 
-  const trendMovies = response.data.results.slice(0, 6);
+  const trendMovies: HomeProps["movies"] = movieResponse.data.results.slice(
+    0,
+    6
+  );
+  const moviesGenres = genreResponse.data.genres;
+
+  const parsedTrendMovies = trendMovies.map((trendMovie) => {
+    const newGenre: GenreProps[] = trendMovie.genre_ids.map(
+      (trendMovieGenre) => {
+        const genres = moviesGenres.find(
+          (movieGenre: GenreProps) => movieGenre.id === trendMovieGenre
+        );
+
+        return genres;
+      }
+    );
+
+    return {
+      ...trendMovie,
+      genre_ids: newGenre,
+    };
+  });
 
   return {
     props: {
-      movies: trendMovies,
+      movies: parsedTrendMovies,
     },
   };
 };

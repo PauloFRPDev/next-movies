@@ -3,16 +3,25 @@
 }
 
 .heroImage {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 0.2fr 1.5fr 1fr;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas:
+    "header header"
+    "hero-information ."
+    "cards-row cards-row";
 
   height: 100%;
-  position: relative;
 }
 
 .heroInformation {
-  max-width: 600px;
-  margin: 100px 0 0 200px;
+  grid-area: hero-information;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 2rem 0 2rem 5rem;
 
   h1 {
     color: #fff;
@@ -27,6 +36,7 @@
     display: flex;
 
     overflow: hidden;
+    width: 50%;
 
     margin: 1rem 0;
     background: none;
@@ -65,15 +75,13 @@
 }
 
 .cardsRow {
-  position: absolute;
-  left: 0;
-  bottom: 2rem;
+  grid-area: cards-row;
 
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   width: 100%;
   min-height: 250px;
-  padding: 0 2rem;
+  padding: 2rem;
   grid-gap: 2rem;
   color: #fff;
 }
@@ -86,7 +94,6 @@
   border-radius: 0.5rem;
   border: 2px solid #fff;
   overflow: hidden;
-  // box-shadow: 2px 2px 5px white;
   cursor: pointer;
 
   > div {
