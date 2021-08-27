@@ -1,6 +1,6 @@
-import type { GetStaticProps, NextPage } from "next";
-import { useState } from "react";
-import { useEffect } from "react";
+import type { GetStaticProps } from "next";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 import { MdPlaylistAdd } from "react-icons/md";
 
 import Header from "../Components/Header";
@@ -26,6 +26,20 @@ interface GenreProps {
 }
 
 const Home = ({ movies }: HomeProps) => {
+  const [pagesWidth, setPagesWidth] = useState(0);
+
+  useEffect(() => {
+    function handleResize() {
+      setPagesWidth(window.innerWidth);
+    }
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const GenreSpan = () => {
     const genres = movies[0].genre_ids as GenreProps[];
 
@@ -54,7 +68,9 @@ const Home = ({ movies }: HomeProps) => {
 
         <div className={styles.heroInformation}>
           <h1>{movies[0].original_title}</h1>
+
           <GenreSpan />
+
           <button>
             <span>Add to list</span>
             <div>
@@ -65,23 +81,33 @@ const Home = ({ movies }: HomeProps) => {
         </div>
 
         <div className={styles.cardsRow}>
-          {movies.slice(1, 6).map((movie) => (
-            <div
-              key={movie.id}
-              className={styles.card}
-              style={{
-                background: `url(https://image.tmdb.org/t/p/w500/${movie.backdrop_path})`,
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
+          {movies.slice(1, pagesWidth <= 1680 ? 5 : 6).map((movie) => (
+            <Link
+              passHref
+              href={{
+                pathname: `/movies/${movie.id}`,
+                query: { movieId: movie.id },
               }}
+              key={movie.id}
             >
-              <div>
-                <p>{movie.original_title}</p>
+              <div
+                className={styles.card}
+                style={{
+                  background: `url(https://image.tmdb.org/t/p/w500/${movie.backdrop_path})`,
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+                <div>
+                  <p>{movie.original_title}</p>
 
-                <span>{movie.vote_average}/10</span>
+                  <span>{movie.vote_average}/10</span>
+
+                  <p>{movie.overview}</p>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

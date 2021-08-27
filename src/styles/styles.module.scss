@@ -80,10 +80,13 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   width: 100%;
-  min-height: 250px;
   padding: 2rem;
   grid-gap: 2rem;
   color: #fff;
+
+  @media (max-width: 1680px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .card {
@@ -106,13 +109,12 @@
     width: 100%;
     padding: 0.5rem 1rem;
     text-align: center;
-    text-overflow: ellipsis;
     overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
-    display: inherit;
     font-stretch: condensed;
 
-    > p {
+    > p:first-child {
       flex: 0;
       font-size: 1.3rem;
       font-weight: 600;
@@ -121,6 +123,51 @@
     > span {
       font-size: 1.1rem;
       font-weight: 500;
+    }
+
+    > p:last-child {
+      display: none;
+      font-size: 0.8rem;
+    }
+  }
+
+  &:hover {
+    > div {
+      height: 100%;
+      justify-content: center;
+      white-space: normal;
+
+      /* Animation on hover */
+      -webkit-animation-name: hover;
+      -webkit-animation-duration: 1.5s;
+      animation-name: hover;
+      animation-duration: 0.8s;
+
+      @-webkit-keyframes hover {
+        from {
+          height: 0;
+        }
+        to {
+          height: 100%;
+        }
+      }
+
+      @keyframes hover {
+        from {
+          height: 0;
+        }
+        to {
+          height: 100%;
+        }
+      }
+
+      > p:first-child, span {
+        display: none;
+      }
+
+      > p:last-child {
+        display: block;
+      }
     }
   }
 }
